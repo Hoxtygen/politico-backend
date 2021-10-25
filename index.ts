@@ -18,8 +18,13 @@ app.get("/", (req: Request, res: Response) => {
     });
 });
 
+app.get("/api/v1", (req:Request, res:Response) => {
+    res.status(200).json({
+        message: "Welcome to Politico API v1. Documentation coming soon."
+    })
+})
+
 
 app.listen(port, () => {
-
     console.log(`Server is listening on port ${port}`);
 })
