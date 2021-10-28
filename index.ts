@@ -28,3 +28,5 @@ app.get("/api/v1", (req:Request, res:Response) => {
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 })
+
+export default app
