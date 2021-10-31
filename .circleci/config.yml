@@ -12,7 +12,7 @@ workflows:
         requires:
           - build
         filters:
-          - branches:
+          branches:
             only: develop
 jobs:
   build:
