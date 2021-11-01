@@ -11,9 +11,9 @@
     "dev": "nodemon --exec npx ts-node index.ts",
     "postinstall": "npm run build",
     "start": "node dist/index.js",
-    "test": "jest  --forceExit --detectOpenHandles --collect-coverage",
-    "coverage": "nyc npm run test",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "test": "jest --detectOpenHandles --collect-coverage",
+    "coverage": "coveralls < coverage/lcov.info",
+    "coveralls": "npm run test && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,6 @@
     "coveralls": "^3.1.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.4.4"
   },
