@@ -1,0 +1,1171 @@
+components:
+  schemas:
+    pageCount:
+      type: integer
+      example: 1
+    itemCount:
+      type: integer
+      example: 5
+    pages:
+      $ref: '#/components/schemas/paginatePage'
+    paginatePage:
+      type: object
+      properties:
+        number:
+          type: integer
+          example: 1
+        url:
+          type: string
+          example: /api/v1/vendors?page=1&limit=10
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: john
+        lastName:
+          type: string
+          example: doe
+        middleName:
+          type: string
+          example: null
+        email:
+          type: string
+          example: example@mail.com
+        phoneNumber:
+          type: string
+          example: 07012344556
+        userName:
+          type: string
+          example: doees
+        isVerified:
+          type: boolean
+          example: true
+        createdAt:
+          $ref: '#/components/schemas/date'
+        updatedAt:
+          $ref: '#/components/schemas/date'
+    token:
+      type: string
+      description: Authentication token
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0aG9ueUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNTYxMTYyMTY0LCJleHAiOjE1NjEyNDg1NjR9.jx2qbXyui03Dhb9F8iwwbMel9LMYIShLYr5Y5y94BtU
+    authToken:
+      type: string
+      description: Authentication token
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0aG9ueUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNTYxMTYyMTY0LCJleHAiOjE1NjEyNDg1NjR9.jx2qbXyui03Dhb9F8iwwbMel9LMYIShLYr5Y5y94BtU
+    id:
+      type: string
+      decription: id of an entitity in database
+      example: 2
+    date:
+      type: Date
+      description: time it was created or updates
+      example: "2020-02-04T16:04:08.607Z"
+    UpdateUserRole:
+      type: object
+      properties:
+        newRole:
+          type: string
+          example: "'business_registration_layer' or 'user'"
+    UpdatedSRRoleInProfile:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        userId:
+          $ref: '#/components/schemas/id'
+        role:
+          type: string
+          example: business_registration_lawyer
+        isEntreprenuer:
+          type: boolean
+          example: false
+        isServiceProvider:
+          type: boolean
+          example: true
+        createdAt:
+          $ref: '#/components/schemas/date'
+        updatedAt:
+          $ref: '#/components/schemas/date'
+    UserSRProfile:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        userId:
+          $ref: '#/components/schemas/id'
+        role:
+          type: string
+          example: business_registration_lawyer
+        isEntreprenuer:
+          type: boolean
+          example: false
+        isServiceProvider:
+          type: boolean
+          example: true
+        createdAt:
+          $ref: '#/components/schemas/date'
+        updatedAt:
+          $ref: '#/components/schemas/date'
+        user:
+          type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/id'
+            firstName:
+              type: string
+              example: Myrtice
+            lastName:
+              type: string
+              example: Franecki
+            middleName:
+              type: string
+              example: Ben
+            email:
+              type: string
+              example: Deshawn.Legros72@hotmail.com
+            phoneNumber:
+              type: string
+              example: 08033000898
+    UpdateUser:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: john
+        middleName:
+          type: string
+          example: jack
+        lastName:
+          type: string
+          example: doe
+        phoneNumber:
+          type: string
+        photo:
+          type: file
+          example: file
+    UserAndProfile:
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/token'
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: john
+        lastName:
+          type: string
+          example: doe
+        middleName:
+          type: string
+          example: jack
+        email:
+          type: string
+          example: example@mail.com
+        phoneNumber:
+          type: string
+          example: 07012344556
+        userName:
+          type: string
+          example: doees
+        isVerified:
+          type: boolean
+          example: true
+        createdAt:
+          $ref: '#/components/schemas/date'
+        updatedAt:
+          $ref: '#/components/schemas/date'
+        profile:
+          $ref: '#/components/schemas/Profile'
+    UpdateUserEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          example: newaddress@mail.com
+    UpdateUserPassword:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+          example: 'Lkfkgkgkgkk!1'
+        newPassword:
+          type: string
+          example: 'Lkfkgkgkgkk!2'
+paths:
+  /user:
+    patch:
+      tags:
+        - User
+      description: update user's names, phone number and profile picture
+      operationId: updateUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+        required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully updated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: "User successfully updated."
+                  data:
+                    $ref: '#/components/schemas/UserAndProfile'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'FirstName is invalid'
+    get:
+      tags:
+        - User
+      description: get all users
+      operationId: getAllUsers
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+        - name: businessRegistered
+          in: query
+          description: users with registered business
+          required: false
+          schema:
+            $ref: '#/components/schemas/BooleanTrue'
+        - name: ageOfBusiness
+          in: query
+          description: level of user business wise
+          required: false
+          schema:
+            type: string
+            example: yet to start
+        - name: isVerified
+          in: query
+          description: user verification status
+          required: false
+          schema:
+            $ref: '#/components/schemas/BooleanTrue'
+        - name: isEntreprenuer
+          in: query
+          description: if user is entrepreneur
+          required: false
+          schema:
+            $ref: '#/components/schemas/BooleanTrue'
+        - name: businessIsThreeYearsUp
+          in: query
+          description: if user's business is more than 3 years
+          required: false
+          schema:
+            $ref: '#/components/schemas/BooleanTrue'
+        - name: isServiceProvider
+          in: query
+          description: if user is service provider
+          required: false
+          schema:
+            $ref: '#/components/schemas/BooleanTrue'
+        - name: role
+          in: query
+          description: role of user
+          required: false
+          schema:
+            schema:
+              type: string
+              example: user
+        - name: skip
+          in: query
+          description: offset point where you want the retrieval to start
+          required: false
+          schema:
+            $ref: '#/components/schemas/skip'
+        - name: limit
+          in: query
+          description: number of records you want to retrieve
+          required: false
+          schema:
+            $ref: '#/components/schemas/limit'
+      responses:
+        200:
+          description: Successfully updated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: "User successfully updated."
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 1
+                      rows:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/UserAndProfile'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'isEntrepreneur is invalid'
+  /user/email:
+    patch:
+      tags:
+        - User
+      description: update user's email
+      operationId: updateUserEmail
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UpdateUserEmail'
+        required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully updated user email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: "Email updated and verification mail sent."
+                  data:
+                    $ref: '#/components/schemas/UserAndProfile'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Email is invalid'
+  /user/password:
+    patch:
+      tags:
+        - User
+      description: update user's password
+      operationId: updateUserPassword
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UpdateUserPassword'
+        required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully updated user password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: "Email updated and verification mail sent."
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        $ref: '#/components/schemas/token'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'New Password is invalid'
+  /user/:id/profile/role:
+    patch:
+      tags:
+        - User
+      description: change a vendor lawyer's role to business_registration_lawyer or user
+      operation: changeLawyerRole
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+        - name: id
+          in: params
+          description: id of the service provider user we want to upgrade
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UpdateUserRole'
+        required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully updated lawyer's role
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: "Lawyer's role successfully upgrated."
+                  data:
+                    $ref: '#/components/schemas/UpdatedSRRoleInProfile'
+        401:
+          description: denied access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 401 error status code
+                    example: '401'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Access denied. You are not Authorized to access this resource.'
+        400:
+          description: error response if vendor don't exist in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 404 error status code
+                    example: '404'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Only service providers that are lawyers can be upgraded.'
+  /user/:id/profile:
+    get:
+      tags:
+        - User
+      description: get startrite profile of a user
+      operationId: getAStartriteProfile
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      responses:
+        200:
+          description: "user's startrite profile succesfully retrieved"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Startrite profile successfully retrieved.'
+                  data:
+                    $ref: '#/components/schemas/UserSRProfile'
+        404:
+          description: response for startrite profile not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 404 error status code
+                    example: '404'
+                  message:
+                    type: string
+                    description: status message
+                    example: "User don't have a startrite profile."
+  /user/profile:
+    get:
+      tags:
+        - User
+      description: user get their startrite profile
+      operationId: getStartriteProfile
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      responses:
+        200:
+          description: "user's startrite profile succesfully retrieved"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Startrite profile successfully retrieved.'
+                  data:
+                    $ref: '#/components/schemas/UpdatedSRRoleInProfile'
+        404:
+          description: response for user not having a startrite profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 404 error status code
+                    example: '404'
+                  message:
+                    type: string
+                    description: status message
+                    example: "You don't have a Startrite profile."
+  /user/entrepreneur:
+    get:
+      tags:
+        - User
+      description: get an entrepreneur
+      operationId: getEntrepreneur
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      responses:
+        200:
+          description: 'entrepreneur details succesfully retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Entrepreneur successfully retrieved.'
+                  data:
+                    $ref: '#/components/schemas/GenericEntrepreneur'
+        404:
+          description: response if user has not onboarded entrepreneur details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Entrepreneur has not provided any business information.'
+  /user/service-provider:
+    get:
+      tags:
+        - User
+      description: get a service provider using the user's id
+      operation: getServiceProviderByUserId
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      responses:
+        200:
+          description: 'service provider details succesfully retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Successfully retreived service provider.'
+                  data:
+                    $ref: '#/components/schemas/ServiceProvider'
+        400:
+          description: response if user is not the service provider
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'User is not the service provider.'
+  /user/book/space:
+    get:
+      tags:
+        - User
+      description: get all space bookings booked by user
+      operationId: getSpaceBookingsBookedByUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      responses:
+        200:
+          description: succesfully retrieved the space bookings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Space bookings successfully retreived.'
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 2
+                      rows:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AllSpaceBookingsBookedByUser'
+        404:
+          description: response if user does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'User does not exist.'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Limit is invalid'
+  /user/book/space/:status:
+    get:
+      tags:
+        - User
+      description: get all space bookings booked by user
+      operationId: getSpaceBookingsBookedByUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+        - name: status
+          in: params
+          description: status of the booking
+          required: true
+          schema:
+            $ref: '#/components/schemas/status'
+      responses:
+        200:
+          description: succesfully retrieved the space bookings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'pending space bookings successfully retreived.'
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 2
+                      rows:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AllSpaceBookingsBookedByUser'
+        404:
+          description: response if user does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'User does not exist.'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Limit is invalid'
+  /user/book/:id/space:
+    get:
+      tags:
+        - User
+      description: get a space booking booked by user
+      operationId: getASpaceBookingBookedByUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+        - name: id
+          in: params
+          description: status of the booking
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: succesfully retrieved the space booking
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Space booked successfully retrieved.'
+                  data:
+                    $ref: '#/components/schemas/ASpaceBookingBookedByUser'
+        404:
+          description: response if the space booking does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Space booking with the given id does not exist.'
+        401:
+          description: response if the space booking was not booked by user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 401 error status code
+                    example: '401'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'The space booking does not belong to the user.'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Limit is invalid'
+  /user/book/equipment:
+    get:
+      tags:
+        - User
+      description: get all equipment bookings booked by user
+      operationId: getEquipmentBookingsBookedByUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+      responses:
+        200:
+          description: succesfully retrieved the equipment bookings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Equipment bookings successfully retreived.'
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 2
+                      rows:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AllEquipmentBookingsBookedByUser'
+        404:
+          description: response if user does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'User does not exist.'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Limit is invalid'
+  /user/book/equipment/:status:
+    get:
+      tags:
+        - User
+      description: get all equipment bookings booked by user
+      operationId: getEquipmentBookingsBookedByUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+        - name: status
+          in: params
+          description: status of the booking
+          required: true
+          schema:
+            $ref: '#/components/schemas/status'
+      responses:
+        200:
+          description: succesfully retrieved the equipment bookings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'pending equipment bookings successfully retreived.'
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 2
+                      rows:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AllEquipmentBookingsBookedByUser'
+        404:
+          description: response if user does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'User does not exist.'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Limit is invalid'
+  /user/book/:id/equipment:
+    get:
+      tags:
+        - User
+      description: get an equipment booking booked by user
+      operationId: getAnEquipmentBookingBookedByUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization header with jwt token
+          required: true
+          schema:
+            $ref: '#/components/schemas/authToken'
+        - name: id
+          in: params
+          description: status of the booking
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        200:
+          description: succesfully retrieved the equipment booking
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '200'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Equipment booked successfully retrieved.'
+                  data:
+                    $ref: '#/components/schemas/AnEquipmentBookingBookedByUser'
+        404:
+          description: response if the equipment booking does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: '400'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Equipment booking with the given id does not exist.'
+        401:
+          description: response if the equipment booking was not booked by user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 401 error status code
+                    example: '401'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'The equipment booking does not belong to the user.'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Limit is invalid'
