@@ -4,7 +4,7 @@ import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express"
 import swaggerDef from "./docs/config/swaggerDef"
 import dotenv from "dotenv"
-import router from "./src/routes"
+import router from "./routes"
 dotenv.config()
 const port = process.env.PORT || 4001;
 

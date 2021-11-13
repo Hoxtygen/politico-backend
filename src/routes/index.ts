@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from 'express'
+import UserController from './../controller/userController';
 const router = express.Router();
 
 
@@ -9,6 +10,8 @@ router.get("/v1", (req: Request, res: Response) => {
         .`
     )
 })
+
+router.get("/v1/user", UserController.getUserByMail)
 
 
 

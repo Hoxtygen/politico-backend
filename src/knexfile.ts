@@ -18,11 +18,11 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: './src/database/migrations'
+      directory: './database/migrations'
 
     }, 
     seeds: {
-      directory: "./src/database/seeds"
+      directory: "./database/seeds"
     },
     useNullAsDefault: true,
   },

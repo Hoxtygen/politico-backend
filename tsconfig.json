@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2019",                                     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "lib": ["ES2019"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "target": "es2015",                                     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    // "lib": ["ES2015"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     "module": "commonjs",                                /* Specify what module code is generated. */
     "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
     "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
@@ -10,7 +10,8 @@
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
     "strict": true,                                      /* Enable all strict type-checking options. */
     "skipLibCheck": true ,
-    "typeRoots": ["node_modules/@types/", "./src/@types/", ".src/**/@types/"]                                /* Skip type checking all .d.ts files. */
+    "typeRoots": ["node_modules/@types/"],
+    "rootDir": "./src",
   },
   "exclude":  ["node_modules"]
 }
