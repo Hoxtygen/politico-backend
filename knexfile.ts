@@ -1,6 +1,5 @@
 // Update with your config settings.
 
-require("ts-node/register");
 import dotenv from "dotenv";
 dotenv.config()
 
@@ -18,11 +17,32 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: './database/migrations'
+      directory: './src/database/migrations'
 
     }, 
     seeds: {
-      directory: "./database/seeds"
+      directory: "./src/database/seeds"
+    },
+    useNullAsDefault: true,
+  },
+
+  test: {
+    client: "postgresql",
+    connection: {
+      connectionString: process.env.test_database,
+      user: process.env.db_username,
+      password: process.env.db_password
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: './src/database/migrations'
+
+    }, 
+    seeds: {
+      directory: "./src/database/seeds"
     },
     useNullAsDefault: true,
   },

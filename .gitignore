@@ -106,3 +106,5 @@ dist
 .vscode/
 
 TODO
+
+request.http

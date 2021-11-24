@@ -1,20 +1,22 @@
 import dotenv from "dotenv"
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { NextFunction, Response } from "express";
 
 
 dotenv.config()
-
-
 
 interface ComparePass {
     encryptedPwd: string;
     userPass: string;
 }
 
-export function generateToken(payload: string):string {
-    const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "3d" })
+interface Payload {
+    id: string;
+    email: string
+}
+
+export function generateToken(payload: Payload):string {
+    const token = jwt.sign({payload}, process.env.JWT_SECRET as string, { expiresIn: "3d" })
     return token;
 }
 
