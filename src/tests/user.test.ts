@@ -39,7 +39,7 @@ describe('Users', () => {
     password: "Lkfkgkgkgkk!1"
   }
   it("should create a new user", async () => {
-    const result = await request(app).post("/api/v1/user").send(user)
+    const result = await request(app).post("/api/v1/signup").send(user)
     expect(result.status).toBe(201)
     expect(result.body).toHaveProperty("user")
     expect(result.body).toHaveProperty("token")
@@ -58,7 +58,7 @@ describe('Users', () => {
       isAdmin: false,
       password: "Lkfkgkgkgkk!1"
     }
-    const result = await request(app).post("/api/v1/user").send(newUser)
+    const result = await request(app).post("/api/v1/signup").send(newUser)
     expect(result.status).toBe(400)
   });
 
@@ -75,12 +75,12 @@ describe('Users', () => {
       password: "Lkfkgkgkgkkhj76"
     };
 
-    const result = await request(app).post("/api/v1/user").send(newUser)
+    const result = await request(app).post("/api/v1/signup").send(newUser)
     expect(result.status).toBe(400)
   })
 
   it("should return 409 for duplicating user", async () => {
-    const result = await request(app).post("/api/v1/user").send(user)
+    const result = await request(app).post("/api/v1/signup").send(user)
     expect(result.status).toBe(409)
   });
 

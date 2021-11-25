@@ -7,7 +7,7 @@ class UserAccess {
     }
 
     static getUserByEmail(email: string) {
-        return db("users").where({ email }).select("firstName", "lastName", "email", "passportUrl", "phoneNumber").first();
+        return db("users").where({ email }).select("id", "firstName", "lastName", "otherName", "gender", "email", "passportUrl", "phoneNumber").first();
     }
 }
 

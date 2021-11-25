@@ -17,7 +17,7 @@ class UserController {
       if (userExists) {
         return res.status(409).json({
           status: 409,
-          message: 'User already exists',
+          message: 'Email has already been registered',
         });
       }
       const [newUser] = await UserService.createUser(newUserData);
@@ -36,7 +36,7 @@ class UserController {
         message: 'Error creating new user',
       });
     } catch (error) {
-      return res.status(500).json({
+      return res.status(503).json({
         status: 'error',
         message: error,
       });
