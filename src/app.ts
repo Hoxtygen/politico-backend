@@ -28,6 +28,6 @@ app.get('/api-docs.json', (req, res) => {
 app.use(morgan('dev'));
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDef));
-app.use('/api/', router);
+app.use('/api/v1', router);
 app.use(apiErroHandler)
 export default app;

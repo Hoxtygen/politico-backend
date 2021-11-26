@@ -13,7 +13,7 @@ router.get('/v1', (req: Request, res: Response) => {
   );
 });
 
-router.get('/v1/user', UserController.getUserByMail);
-router.post('/v1/signup', validateUserData(userInfoSchema), UserController.signup);
+router.get('/user', UserController.getUserByMail);
+router.post('/signup', validateUserData(userInfoSchema), UserController.signup);
 
 export default router;

@@ -28,7 +28,7 @@ components:
           example: https://res.cloudinary.com/dh3jxarvg/image/upload/v1551327976/olitorius_xnr3f8.jpg
         password:
           type: string
-          format: password
+          example: Lkfkgkgkgkk!1
         gender: 
           type: string
           example: male
@@ -90,7 +90,7 @@ components:
             type: string
             example: Some error occurred
 paths: 
-  /signup:
+  /api/v1/signup:
     post:
       tags:
         - Authentication
