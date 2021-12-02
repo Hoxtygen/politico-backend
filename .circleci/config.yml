@@ -40,6 +40,8 @@ jobs:
             - ./node_modules
       - run: # database creation
           name: create database
+          command: sudo -u postgres psql -p 5432 -c "create user postgres;"
+          command: sudo -u postgres psql -p 5432 -c "alter user postgres with superuser;"
           command: sudo -u postgres psql -p 5432 -c "create database politico_test;"
       - run: #run tests
           name: test
