@@ -47,6 +47,7 @@ jobs:
       - run: # run build
           name: Build
           command: npm run build
-      # - coveralls/upload
-
+      - run: # database creation
+          name: create database
+          command: sudo -u postgres psql -p 5432 -c "create database politico_test;"
 
