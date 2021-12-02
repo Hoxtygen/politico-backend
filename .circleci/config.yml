@@ -40,7 +40,7 @@ jobs:
             - ./node_modules
       - run: # database creation
           name: create database
-          command: sudo -u postgres psql -p 5432 -c "create database politico_test;"
+          command: psql -p 5432 -c "create database politico_test;"
       - run: #run tests
           name: test
           command: npm run test
