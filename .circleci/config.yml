@@ -18,6 +18,10 @@ jobs:
   build:
     docker:
       - image: circleci/node:14.17
+        environment: 
+          PGHOST: 127.0.0.1
+          PGUSER: hoxtygen
+          NODE_ENV: test
       - image: circleci/postgres:11-alpine-ram
         environment:
           POSTGRES_USER: ${POSTGRES_USER}
