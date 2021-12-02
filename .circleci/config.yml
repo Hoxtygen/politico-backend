@@ -20,7 +20,7 @@ jobs:
       - image: circleci/node:14.17
         environment: 
           PGHOST: 127.0.0.1
-          PGUSER: hoxtygen
+          PGUSER: postgres
           NODE_ENV: test
       - image: circleci/postgres:11-alpine-ram
         environment:
