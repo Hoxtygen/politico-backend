@@ -38,12 +38,6 @@ jobs:
           key: dependency-cache-{{checksum "package.json"}}
           paths:
             - ./node_modules
-      - run: # setup postgresql user
-          name: create database user
-          command: sudo -u postgres psql -p 5432 -c "create user hoxtygen;"
-      - run: # setup user privilege
-          name: create user privilege
-          command: sudo -u postgres psql -p 5432 -c "alter user hoxtygen with superuser;"
       - run: # database creation
           name: create database
           command: sudo -u postgres psql -p 5432 -c "create database politico_test;"
