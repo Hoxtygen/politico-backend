@@ -24,6 +24,7 @@ jobs:
           NODE_ENV: test
       - image: circleci/postgres:11-alpine-ram
         environment:
+          TEST_DATABASE_URL: postgresql://root@localhost/politico_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ""
           POSTGRES_DB: politico_test
@@ -38,9 +39,13 @@ jobs:
           key: dependency-cache-{{checksum "package.json"}}
           paths:
             - ./node_modules
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-11
+      - run: whoami
       - run: # database creation
-          name: create database
-          command: sudo -u $POSTGRES_USER psql -p 5432 -c "create database politico_test;"
+          # name: create database
+          # command: sudo -u $POSTGRES_USER psql -p 5432 -c "create database politico_test;"
+          # command: | psql \ "CREATE DATABASE politico_test;"
       - run: #run tests
           name: test
           command: npm run test
