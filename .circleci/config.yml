@@ -44,7 +44,7 @@ jobs:
           command: sudo apt-get update
       - run:
           name: install postgres client
-          command: sudo apt-get install postgresql-client-11
+          command: sudo apt-get install postgresql-client
       - run:
           name: check current user
           command: whoami
