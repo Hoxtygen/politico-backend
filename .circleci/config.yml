@@ -48,10 +48,6 @@ jobs:
       - run:
           name: check current user
           command: whoami
-      - run:# database creation
-          # name: create database
-          # command: sudo -u $POSTGRES_USER psql -p 5432 -c "create database politico_test;"
-          # command: | psql \ "CREATE DATABASE politico_test;"
       - run: #run tests
           name: test
           command: npm run test
