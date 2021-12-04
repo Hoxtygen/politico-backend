@@ -45,9 +45,9 @@ jobs:
       - run:
           name: install postgres client
           command: sudo apt-get install postgresql-client
-      - run:# database creation
+      - run: # database creation
           name: create database
-          command: | psql \ "CREATE DATABASE politico_test;"
+          command: psql \ "CREATE DATABASE politico_test;"
       - run:
           name: check current user
           command: whoami
