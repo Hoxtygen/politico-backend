@@ -48,8 +48,6 @@ jobs:
       - run: # database creation
           name: create database
           command: | 
-            sudo -u postgres psql -p 5433 -c "create user hoxtygen with password 'hoxtygen';"
-            sudo -u postgres psql -p 5433 -c "alter user hoxtygen with superuser;"
             sudo -u postgres psql -p 5433 -c "create database politico_test;"
       - run:
           name: check current user
