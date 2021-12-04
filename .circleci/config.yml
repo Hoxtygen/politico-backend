@@ -43,8 +43,8 @@ jobs:
       - run: 
           name: Set Up DB
           command: |
-            knex migrate:latest
-            knex seed:run
+            npx knex migrate:latest
+            npx knex seed:run
       - run:
           name: check current user
           command: whoami
