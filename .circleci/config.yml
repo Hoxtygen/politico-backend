@@ -40,11 +40,6 @@ jobs:
       - run:
           name: install postgres client
           command: sudo apt-get install postgresql-client
-      - run: 
-          name: Set Up DB
-          command: |
-            npx knex migrate:latest
-            npx knex seed:run
       - run:
           name: check current user
           command: whoami

@@ -5,7 +5,7 @@ const db = require("../database/dbConfig")
 
 
 describe('Users', () => {
-/*   beforeAll(function (done) {
+  beforeAll(function (done) {
     db.migrate.rollback()
       .then(function () {
         db.migrate.latest()
@@ -16,7 +16,7 @@ describe('Users', () => {
               });
           });
       });
-  }); */
+  });
 
   afterAll(function (done) {
     db.migrate.rollback()
@@ -25,7 +25,7 @@ describe('Users', () => {
       });
   });
 
- 
+
 
   const user = {
     firstName: "John",
