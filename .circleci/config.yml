@@ -37,12 +37,9 @@ jobs:
       - run:
           name: update postgres client
           command: sudo apt-get update
-      - run:
-          name: install postgres client
-          command: sudo apt-get install postgresql-client
-      - run:
-          name: check current user
-          command: whoami
+      - run: # database setup
+          name: create database
+          command: sudo -u postgres psql -p 5432 -c "create database politico_test;"
       - run: #run tests
           name: test
           command: npm run test
