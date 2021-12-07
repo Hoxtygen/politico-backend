@@ -17,7 +17,7 @@ class UserController {
       if (userExists) {
         return res.status(409).json({
           status: 409,
-          message: 'Email has already been registered',
+          message: 'User already registered',
         });
       }
       const [newUser] = await UserService.createUser(newUserData);
