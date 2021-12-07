@@ -10,7 +10,7 @@
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "dev": "nodemon --exec npx ts-node ./src/index.ts",
     "postinstall": "npm run build",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "test": "jest --detectOpenHandles --collect-coverage --force-exit",
     "coverage": "coveralls < coverage/lcov.info",
     "coveralls": "npm run test && cat ./coverage/lcov.info | coveralls"
