@@ -44,7 +44,7 @@ jobs:
       - run: # database setup
           name: create database
           command: |
-             psql --host localhost -U postgres -p 5432 -c "create database politico_test;"
+             sudo psql --host localhost -U postgres -p 5432 -c "create database politico_test;"
       - run: #run tests
           name: test
           command: npm run test
