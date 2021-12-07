@@ -1,4 +1,10 @@
 import  knex  from "knex";
 const configOptions = require("../../knexfile");
-const option = configOptions.development
-module.exports = knex(option);
+let dbConfigOption;
+if (process.env.NODE_ENV === "test") {
+  dbConfigOption = configOptions.test
+} else {
+  dbConfigOption = configOptions.development
+}
+
+module.exports = knex(dbConfigOption);

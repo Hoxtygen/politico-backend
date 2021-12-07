@@ -18,6 +18,11 @@ jobs:
   build:
     docker:
       - image: circleci/node:14.17
+      - image: circleci/postgres:9.6.5-alpine-ram
+        environment:
+          # TEST_DATABASE_URL: postgresql://root@localhost/politico_test
+          POSTGRES_USER: root
+          POSTGRES_DB: politico_test
     steps:
       - checkout
       - restore_cache:
@@ -29,6 +34,17 @@ jobs:
           key: dependency-cache-{{checksum "package.json"}}
           paths:
             - ./node_modules
+      - run:
+          name: update postgres client
+          command: sudo apt-get update
+      - run:
+          name: wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: echo '/usr/lib/postgresql/9.6/bin/:$PATH' >> $BASH_ENV
+      - run: # database setup
+          name: create database
+          command: |
+             sudo psql --host localhost -U postgres -p 5432 -c "create database politico_test;"
       - run: #run tests
           name: test
           command: npm run test
@@ -38,5 +54,3 @@ jobs:
       - run: # run build
           name: Build
           command: npm run build
-      # - coveralls/upload
-
