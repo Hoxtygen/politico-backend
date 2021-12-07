@@ -37,9 +37,13 @@ jobs:
       - run:
           name: update postgres client
           command: sudo apt-get update
+      - run:
+          name: wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: echo '/usr/lib/postgresql/9.6/bin/:$PATH' >> $BASH_ENV
       - run: # database setup
           name: create database
-          command: sudo -su postgres psql -p 5432 -c "create database politico_test;"
+          command: sudo -u postgres psql -p 5432 -c "create database politico_test;"
       - run: #run tests
           name: test
           command: npm run test
