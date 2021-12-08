@@ -2,21 +2,10 @@ import dotenv from "dotenv"
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 
-
 dotenv.config()
 
-interface ComparePass {
-    encryptedPwd: string;
-    userPass: string;
-}
-
-interface Payload {
-    id: string;
-    email: string
-}
-
-export function generateToken(payload: Payload): string {
-    const token = jwt.sign({ payload }, process.env.JWT_SECRET as string, { expiresIn: "3d" })
+export function generateToken(id:string, email:string): string {
+    const token = jwt.sign({ id, email }, process.env.JWT_SECRET as string, { expiresIn: "3d" })
     return token;
 }
 
@@ -25,6 +14,6 @@ export function encryptPassword(pwd: string): string {
     return bcrypt.hashSync(pwd, salt)
 }
 
-export function comparePassword({ encryptedPwd, userPass }: ComparePass): boolean {
-    return bcrypt.compareSync(encryptedPwd, userPass);
+export function comparePassword( encryptedPwd:string, userPass:string): boolean {
+    return bcrypt.compareSync(userPass, encryptedPwd);
 }

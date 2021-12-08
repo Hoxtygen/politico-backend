@@ -1,10 +1,11 @@
 import request from 'supertest';
 import app from '../app';
+import { encryptPassword, comparePassword } from '../middlewares/secure';
 
 const db = require("../database/dbConfig")
 
 
-describe('Users', () => {
+describe('Users information', () => {
   beforeAll(function (done) {
     db.migrate.rollback()
       .then(function () {
@@ -24,8 +25,6 @@ describe('Users', () => {
         done();
       });
   });
-
-
 
   const user = {
     firstName: "John",
@@ -77,7 +76,7 @@ describe('Users', () => {
 
     const result = await request(app).post("/api/v1/signup").send(newUser)
     expect(result.status).toBe(400)
-  })
+  });
 
   it("should return 409 for duplicating user", async () => {
     const result = await request(app).post("/api/v1/signup").send(user)
@@ -93,7 +92,7 @@ describe('Users', () => {
       expect(res.status).toBe(200)
       done()
     })
-  })
+  });
 
   it("should return 404 for non-existing user", (done) => {
     const nonexist = {
@@ -104,5 +103,54 @@ describe('Users', () => {
       expect(res.status).toBe(404)
       done()
     })
-  })
-})
+  });
+
+  it("should return 401 for incorrect email", async () => {
+    const user = {
+      email: 'madmelon@example.com',
+      password: "Lkfkgkgkgkk!1"
+    }
+    const result = await request(app).post("/api/v1/login").send(user)
+    expect(result.status).toBe(401)
+  });
+
+  it("should return 401 for incorrect password", async() => {
+    const user = {
+      email: 'john@aol.com',
+      password: "Lkfkgkgkgkk!123"
+    }
+    const result = await request(app).post("/api/v1/login").send(user)
+    expect(result.status).toBe(401)
+
+  });
+
+    it("should return 400 for incorrect password format", async() => {
+      const user = {
+        email: 'john@aol.com',
+        password: "12345678"
+      }
+      const result = await request(app).post("/api/v1/login").send(user)
+      expect(result.status).toBe(400)
+
+    });
+
+    it("should return 400 for incorrect email format", async() => {
+      const user = {
+        email: 'john@aol..com',
+        password: "Lkfkgkgkgkk!123"
+      }
+      const result = await request(app).post("/api/v1/login").send(user)
+      expect(result.status).toBe(400)
+
+    });
+
+  it("should return 200 for correct email and password", async() => {
+    const user = {
+      email: 'john@aol.com',
+      password: "Lkfkgkgkgkk!1"
+    }
+    const result = await request(app).post("/api/v1/login").send(user)
+    expect(result.status).toBe(200)
+
+  });
+});

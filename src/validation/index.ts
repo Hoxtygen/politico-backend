@@ -16,4 +16,12 @@ export const userInfoSchema = yup.object().shape({
     isAdmin: yup.boolean().default(false),
 })
 
+export const loginDataSchema = yup.object().shape({
+    email: yup.string().trim().email().defined("Email is required"),
+    password: yup.string().min(8, "Password must be at least 8 characters in length").max(15, "Password must not be more than 15 characters in length")
+        .matches(
+            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+            "Password must include at least one lower case letter, upper case letter, a number and special character."
+        ).trim().defined("Password is required"),
+})
 

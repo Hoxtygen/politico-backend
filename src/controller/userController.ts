@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import UserService from '../service/userService';
-import { encryptPassword, generateToken } from '../middlewares/secure';
+import { encryptPassword, generateToken, comparePassword } from '../middlewares/secure';
 import { User } from '../typedef';
 
 class UserController {
@@ -23,7 +23,7 @@ class UserController {
       const [newUser] = await UserService.createUser(newUserData);
       if (newUser) {
         const { id, email } = newUser;
-        const token = generateToken({ id, email });
+        const token = generateToken(id, email);
         return res.status(201).json({
           status: 'ok',
           message: 'User created successfully',
@@ -57,6 +57,31 @@ class UserController {
       message: 'User retrieved successfully',
       user,
     });
+  }
+
+  static async loginUser(req: Request, res: Response) {
+    const { email, password }: { email: string, password: string } = req.body;
+    try {
+      const user = await UserService.getUserByEmail(email)
+      if (user && comparePassword(user.password, password)) {
+        return res.status(200).json({
+          status: 200,
+          message: `Welcome ${user.email}`,
+          token: generateToken(user.id, user.email),
+          user
+        })
+      }
+      return res.status(401).json({
+        status: 401,
+        message: "Incorrect email/password"
+      })
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({
+        status: 500,
+        message: error
+      })
+    }
   }
 }
 
