@@ -28,7 +28,16 @@ class UserController {
           status: 'ok',
           message: 'User created successfully',
           token,
-          user: newUser,
+          user: {
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            otherName: newUser.otherName,
+            email: newUser.email,
+            phoneNumber: newUser.phoneNumber,
+            passportUrl: newUser.passportUrl,
+            isAdmin: newUser.isAdmin,
+            gender: newUser.gender
+          }
         });
       }
       return res.status(400).json({
@@ -68,7 +77,17 @@ class UserController {
           status: 200,
           message: `Welcome ${user.email}`,
           token: generateToken(user.id, user.email),
-          user
+          user: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            otherName: user.otherName,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            passportUrl: user.passportUrl,
+            isAdmin: user.isAdmin,
+            gender: user.gender
+
+          }
         })
       }
       return res.status(401).json({
@@ -76,7 +95,6 @@ class UserController {
         message: "Incorrect email/password"
       })
     } catch (error) {
-      console.log(error)
       return res.status(500).json({
         status: 500,
         message: error
