@@ -29,45 +29,45 @@ components:
         password:
           type: string
           example: Lkfkgkgkgkk!1
-        gender: 
+        gender:
           type: string
           example: male
-        phoneNumber: 
+        phoneNumber:
           type: string
           example: 0801234567890
-        isAdmin: 
+        isAdmin:
           type: boolean
           example: false
-    CreatedUser: 
+    CreatedUser:
       type: object
-      properties: 
+      properties:
         token:
           type: string
-        id: 
+        id:
           type: integer
-        firstName: 
+        firstName:
           type: string
-        lastName: 
+        lastName:
           type: string
-        otherName: 
+        otherName:
           type: string
-        email: 
+        email:
           type: string
         passportUrl:
           type: string
-        password: 
+        password:
           type: string
-        gender: 
+        gender:
           type: string
         phoneNumber:
           type: string
-        isAdmin: 
+        isAdmin:
           type: boolean
-        created_at: 
+        created_at:
           type: date
-        updated_at: 
+        updated_at:
           type: date
-      example: 
+      example:
         id: 1
         token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo2LCJlbWFpbCI6ImR1cm9yb3NhbndvbTFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNjM3NzU3OTM1LCJleHAiOjE2MzgwMTcxMzV9.BJF9ad5N9ZDIEdNJMLti3mukcb5ITQRgz9Brr5cQM1c
         firstName: Alan
@@ -80,6 +80,20 @@ components:
         isAdmin: false
         created_at: "2021-11-24T12:45:35.348Z"
         updated_at: "2021-11-24T12:45:35.348Z"
+    LoginUser:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          format: password
+      example:
+        email: "johndoe@example.com"
+        password: IYiuu96968kh$%
     GenericErrorResponse:
       type: object
       properties:
@@ -89,7 +103,7 @@ components:
           message:
             type: string
             example: Some error occurred
-paths: 
+paths:
   /api/v1/signup:
     post:
       tags:
@@ -99,13 +113,13 @@ paths:
       parameters: []
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
-              $ref: '#/components/schemas/NewUser'
+              $ref: "#/components/schemas/NewUser"
         required: true
       produces:
         - application/json
-      responses: 
+      responses:
         201:
           description: created user
           content:
@@ -116,13 +130,13 @@ paths:
                   status:
                     type: integer
                     description: 201 success status code
-                    example: '201'
+                    example: "201"
                   message:
                     type: string
                     description: status message
-                    example: 'success'
+                    example: "success"
                   user:
-                    $ref: '#/components/schemas/CreatedUser'
+                    $ref: "#/components/schemas/CreatedUser"
         409:
           description: User already exists
           content:
@@ -133,11 +147,11 @@ paths:
                   status:
                     type: integer
                     description: 409 error status code
-                    example: '409'
+                    example: "409"
                   message:
                     type: string
                     description: status message
-                    example: 'Email has already been registered'
+                    example: "Email has already been registered"
         503:
           description: System errors
           content:
@@ -148,9 +162,72 @@ paths:
                   status:
                     type: integer
                     description: 503 error status code
-                    example: '503'
+                    example: "503"
                   message:
                     type: string
                     description: status message
-                    example: 'Some error occurred'
-    
+                    example: "Some error occurred"
+
+  /api/v1/login:
+    post:
+      tags:
+        - Authentication
+      description: signs in a user
+      operatinId: loginUser
+      parameters: []
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+        required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Logged in user successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 200 success status code
+                    example: "200"
+                  message:
+                    type: string
+                    description: status message
+                    example: "success"
+                  data:
+                    $ref: "#/components/schemas/CreatedUser"
+        401:
+          description: incorrect email/password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 401 error status code
+                    example: "401"
+                  message:
+                    type: string
+                    description: status message
+                    example: "Incorrect email/password"
+        400:
+          description: email and/or password is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 400 error status code
+                    example: "400"
+                  message:
+                    type: string
+                    description: status message
+                    example: "Email is required"
