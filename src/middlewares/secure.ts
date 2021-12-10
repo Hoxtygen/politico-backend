@@ -17,3 +17,6 @@ export function encryptPassword(pwd: string): string {
 export function comparePassword( encryptedPwd:string, userPass:string): boolean {
     return bcrypt.compareSync(userPass, encryptedPwd);
 }
+
+export const isProd = () => process.env.NODE_ENV === 'production'
+export const isDev = () => process.env.NODE_ENV === 'development'
